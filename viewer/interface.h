@@ -7,6 +7,7 @@
 extern Fl_Window *main_window;
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Button.H>
+#include <FL/Fl_Light_Button.H>
 #ifdef WRITE_JPEGS
 extern void save_callback(Fl_Button*, void *);
 extern Fl_Button *save_button;
@@ -19,9 +20,12 @@ extern void load_callback(Fl_Button*, void*);
 extern Fl_Button *loadMotion_button;
 extern Fl_Button *loadActor_button;
 extern void interpolate_callback(Fl_Button*, void*);
+extern void set_keyframe_callback(Fl_Button*, void*);
+extern void keyframe_callback(Fl_Light_Button*, long);
 //DEGUG: temp
 //extern Fl_Button *saveAs_button;
 extern Fl_Button *interpolate_button;
+extern Fl_Button *set_keyframe_button;
 
 extern void locate_callback(Fl_Button*, void*);
 extern Fl_Button *locate_button;
@@ -29,7 +33,7 @@ extern Fl_Button *rewind_button;
 extern void play_callback(Fl_Button*, void *);
 extern Fl_Button *play_button;
 extern Fl_Button *repeat_button;
-#include <FL/Fl_Light_Button.H>
+
 #ifdef WRITE_JPEGS
 extern void record_callback(Fl_Light_Button*, void *);
 extern Fl_Light_Button *record_button;
@@ -40,6 +44,7 @@ extern Fl_Value_Slider *frame_slider;
 extern void redisplay_proc(Fl_Light_Button*, long);
 extern Fl_Light_Button *light_button;
 extern Fl_Light_Button *background_button;
+extern Fl_Light_Button *keyframe_button;
 #include "player.h"
 extern Player_Gl_Window *glwindow;
 #include <FL/Fl_Value_Input.H>
