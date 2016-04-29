@@ -17,3 +17,7 @@ LinearInterpolate(float t, Posture const& a, Posture const& b )
 
 	return InterpPosture;
 }
+
+bool Posture::operator<(Posture other) {
+  return frame < other.frame;
+}

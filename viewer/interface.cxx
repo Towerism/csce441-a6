@@ -127,10 +127,10 @@ Fl_Window* make_window() {
 	{ Fl_Light_Button* o = background_button = new Fl_Light_Button(100, 495, 105, 25, "Background");
 	o->callback((Fl_Callback*)redisplay_proc, (void*)(0));
 	}
-	{ Fl_Light_Button* o = keyframe_button = new Fl_Light_Button(420, 495, 95, 25, "Keyframe");
+	{ Fl_Light_Button* o = keyframe_button = new Fl_Light_Button(420, 495, 150, 25, "Keyframing Mode");
 	o->callback((Fl_Callback*)keyframe_callback, (void*)(0));
 	}
-	{ Fl_Button* o = set_keyframe_button = new Fl_Button(525, 495, 120, 25, "Set Keyframe");
+	{ Fl_Button* o = set_keyframe_button = new Fl_Button(580, 495, 120, 25, "Set Keyframe");
 	o->callback((Fl_Callback*)set_keyframe_callback, (void*)(0));
 	}
 	{ Player_Gl_Window* o = glwindow = new Player_Gl_Window(5, 5, 640, 480, "label");

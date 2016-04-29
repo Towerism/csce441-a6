@@ -64,7 +64,7 @@ char * Skeleton::idx2name(int idx)
 		return m_pBoneList[i].name;
 }
 
-void Skeleton::readASFfile(char* asf_filename, float scale)
+void Skeleton::readASFfile(const char* asf_filename, float scale)
 {
 	//open file
     std::ifstream is(asf_filename, std::ios::in);
@@ -468,7 +468,7 @@ void set_bone_shape(Bone *bone)
 
 
 // Constructor 
-Skeleton::Skeleton(char *asf_filename, float scale)
+Skeleton::Skeleton(const char *asf_filename, float scale)
 {
 	sscanf("root","%s",m_pBoneList[0].name);
 	NUM_BONES_IN_ASF_FILE = 1;

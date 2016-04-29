@@ -29,7 +29,7 @@ Motion::Motion(int nNumFrames)
 	SetPosturesToDefault();
 }
 
-Motion::Motion(char *amc_filename, float scale,Skeleton * pActor2)
+Motion::Motion(const char *amc_filename, float scale,Skeleton * pActor2)
 {
 	pActor = pActor2;
 
@@ -40,7 +40,7 @@ Motion::Motion(char *amc_filename, float scale,Skeleton * pActor2)
 	readAMCfile(amc_filename, scale);	
 }
 
-Motion::Motion(char *amc_filename, float scale)
+Motion::Motion(const char *amc_filename, float scale)
 {
 //	m_NumDOFs = actor.m_NumDOFs;
 	offset = 0;
@@ -97,12 +97,12 @@ void Motion::SetTimeOffset(int n_offset)
 	offset = n_offset;
 }
 
-void Motion::SetBoneRotation(int nFrameNum, vector vRot, int nBone)
+void Motion::SetBoneRotation(int nFrameNum, whyNameThisClassTheSameAsSTDvectorThatIsDumb vRot, int nBone)
 {
 	m_pPostures[nFrameNum].bone_rotation[nBone] = vRot;
 }
 
-void Motion::SetRootPos(int nFrameNum, vector vPos)
+void Motion::SetRootPos(int nFrameNum, whyNameThisClassTheSameAsSTDvectorThatIsDumb vPos)
 {
 	m_pPostures[nFrameNum].root_pos = vPos;
 }
@@ -117,7 +117,7 @@ Posture* Motion::GetPosture(int nFrameNum)
 }
 
 
-int Motion::readAMCfile(char* name, float scale)
+int Motion::readAMCfile(const char* name, float scale)
 {
 	Bone *hroot, *bone;
 	bone = hroot= (*pActor).getRoot();
@@ -258,7 +258,7 @@ int Motion::readAMCfile(char* name, float scale)
 	return n;
 }
 
-int Motion::writeAMCfile(char *filename, float scale)
+int Motion::writeAMCfile(const char *filename, float scale)
 {
 	int f, n, j, d;
 	Bone *bone;

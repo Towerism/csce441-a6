@@ -11,15 +11,19 @@
 
 #include <process.h>
 
+#include <algorithm>
 #include <GL/gl.h>				// Header so that you can use GL routines (MESA)
 #include <GL/glu.h>				// some OpenGL extensions
 #include <FL/glut.H>			// GLUT for use with FLTK
 #include <FL/fl_file_chooser.H> // Allow a file chooser for save.
 #include <iostream>
+#include <list>
+#include <string>
 using namespace std;
 
 #include "player.h"   		      
 #include "interface.h"			// UI framework built by FLTK (using fluid)
+#include "interpolation.h"
 
 #ifdef WRITE_JPEGS
 #include "pic.h"				// for saving jpeg pictures.  
@@ -29,6 +33,8 @@ using namespace std;
 #include "display.h"   
 #include "interpolator.h"
 #include "video_texture.h"
+
+#include <vector>
 
 /***************  Types *********************/
 enum { OFF, ON };
@@ -59,7 +65,7 @@ static int Record = OFF;
 static char *Record_filename;			// Recording file name 
 #endif
 
-static int PlayInterpMotion = ON;			// Flag which desides which motion to play (pSampledMotion or pInterpMotion)	
+static int PlayInterpMotion = OFF;			// Flag which desides which motion to play (pSampledMotion or pInterpMotion)	
 
 static int Background = ON, Light = OFF;	// Flags indicating if the object exists    
 
@@ -67,7 +73,30 @@ static int recmode = 0;
 static int piccount = 0;
 static char * argv2;
 static int maxFrames = 0;
+
+static string actor_file;
+static string motion_file;
+
+static Catmull_frameset frameset;
+
+static std::vector<Posture> key_frames;
+
 /***************  Functions *******************/
+
+Catmull_frameset::Catmull_frameset(int i) {
+  for (int j = 0; j < 4; ++j)
+    frames.emplace_back(key_frames[i + j]);
+}
+
+static ostream& operator<<(ostream& os, list<int> list) {
+  os << "( ";
+  for (auto item : list) {
+    os << item << " ";
+  }
+  os << ")";
+  return os;
+}
+
 static void draw_triad() {
   glBegin(GL_LINES);
 
@@ -190,16 +219,102 @@ void keyframe_callback(Fl_Light_Button *obj, long val) {
   Keyframing = obj->value();
 }
 
+// Select Frame callback
+void set_keyframe_callback(Fl_Button *button, void *) {
+  if (!Keyframing)
+    return;
+  Posture* selected = save_frame();
+  key_frames.push_back(*selected);
+  display_selected(*selected);
+}
 
-void set_keyframe_callback(Fl_Button *button, void*) {
-  if (Keyframing)
-    cout << "Keyframe set" << endl;
+Posture* save_frame() {
+  Posture* selected = pSampledMotion->GetPosture(nFrameNum);
+  selected->frame = nFrameNum;
+  return selected;
+}
+
+void display_selected(Posture selected) {
+  create_skeleton_copy({ 0.37f, 0.1f, 0.5f });
+  apply_selected_as_motion(selected);
+}
+
+void create_skeleton_copy(Color color) {
+  Skeleton* copy = new Skeleton(actor_file.c_str(), MOCAP_SCALE);
+  copy->color = color;
+  copy->setBasePosture();
+  displayer.loadActor(copy);
+}
+
+void apply_selected_as_motion(Posture selected) {
+  Motion* selected_motion = new Motion(motion_file.c_str(), MOCAP_SCALE, pActor);
+  for (int i = 0; i < selected_motion->m_NumFrames; i++) {
+    selected_motion->SetPosture(i, selected);
+  }
+  displayer.loadMotion(selected_motion);
 }
 
 //Interpolate motion
 void interpolate_callback(Fl_Button *button, void *) {
-  cout << "Do interpolation here!" << endl;
+  interpolate();
+}
 
+void pad_key_frames() {
+  for (int i = 0; i < 4; ++i)
+    key_frames.push_back(key_frames.back());
+
+  for (int i = 0; i < 4; ++i)
+    key_frames.insert(key_frames.begin(), key_frames.front());
+}
+
+void interpolate() {
+  if (key_frames.empty())
+    return;
+  pad_key_frames();
+  sort(key_frames.begin(), key_frames.end());
+  pInterpMotion = new Motion(pSampledMotion->m_NumFrames);
+  for (int i = 0; i < key_frames.size() - 3; i++)
+    perform_catmull(i);
+  update_slider();
+  display_interpolation();
+}
+
+void perform_catmull(int i) {
+  frameset = Catmull_frameset(i);
+  pInterpMotion->SetPosture(frameset.position(0), frameset.get(0));
+  interpolate_frameset(i);
+}
+
+void interpolate_frameset(int i) {
+  for (int j = frameset.position(1) + 1; j < frameset.position(2); j++)
+    interpolate_frame(j);
+  if (i == (key_frames.size() - 4))
+    posture_frame(frameset.position(3), frameset.get(3));
+}
+
+void interpolate_frame(int i) {
+  float interp = calculate_interp(i, frameset);
+  Interpolation interpolate(frameset.get(0), frameset.get(1), frameset.get(2), frameset.get(3));
+  Posture interpolated = interpolate(interp);
+  posture_frame(i, interpolated);
+}
+
+float calculate_interp(int i, Catmull_frameset frames) {
+  return (float)(i - frames.position(1)) / (frames.position(2) - frames.position(1));
+}
+
+void posture_frame(int i, Posture posture) {
+  pInterpMotion->SetPosture(i, posture);
+}
+
+void update_slider() {
+  maxFrames = (pInterpMotion->m_NumFrames);
+  frame_slider->maximum((double)maxFrames);
+}
+
+void display_interpolation() {
+  create_skeleton_copy({ 0.3f, 1.f, 0.5f });
+  displayer.loadMotion(pInterpMotion);
 }
 
 
@@ -208,6 +323,8 @@ void load_callback(Fl_Button *button, void *) {
 
   if (button == loadActor_button) {
     filename = fl_file_chooser("Select filename", "*.ASF", "");
+    actor_file = string(filename);
+
     if (filename != NULL) {
       //Remove old actor
       //if(pActor != NULL) 
@@ -227,6 +344,7 @@ void load_callback(Fl_Button *button, void *) {
   if (button == loadMotion_button) {
     if (bActorExist == true) {
       filename = fl_file_chooser("Select filename", "*.AMC", "");
+      motion_file = string(filename);
       if (filename != NULL) {
         //delete old motion if any
         //if (pSampledMotion != NULL)

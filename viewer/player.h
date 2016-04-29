@@ -11,6 +11,10 @@
 #define _PLAYER_H
 
 #include <FL/Fl_Gl_Window.H>
+#include "posture.h"
+#include "skeleton.h"
+
+#include <vector>
 
 class Player_Gl_Window : public Fl_Gl_Window 
 {
@@ -33,6 +37,20 @@ class Player_Gl_Window : public Fl_Gl_Window
 #endif
 };
 
+class Catmull_frameset {
+  std::vector<Posture> frames;
+public:
+  Catmull_frameset() = default;
+  Catmull_frameset(int i);
+
+  Posture get(int i) {
+    return frames[i];
+  }
+
+  int position(int i) {
+    return frames[i].frame;
+  }
+};
 
 typedef struct _MouseT {
   int button;
@@ -59,5 +77,21 @@ void gl_init();
 void light_init();
 void display();
 static void error_check(int loc);
+
+
+Posture* save_frame();
+
+void display_selected(Posture selected);
+void create_skeleton_copy(Color color);
+void apply_selected_as_motion(Posture selected);
+void pad_key_frames();
+void interpolate();
+void perform_catmull(int i);
+void interpolate_frameset(int i);
+void interpolate_frame(int i);
+float calculate_interp(int i, Catmull_frameset frames);
+void posture_frame(int i, Posture posture);
+void display_interpolation();
+void update_slider();
 
 #endif

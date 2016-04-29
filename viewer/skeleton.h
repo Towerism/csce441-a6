@@ -12,6 +12,11 @@
 
 #include "posture.h"
 
+
+struct Color {
+  float r, g, b;
+};
+
 // Bone segment names used in ASF file
 static int root = 0;
 
@@ -61,7 +66,7 @@ class Skeleton {
 
 	// The scale parameter adjusts the size of the skeleton. The default value is 0.06 (MOCAP_SCALE).
     // This creates a human skeleton of 1.7 m in height (approximately)
-    Skeleton(char *asf_filename, float scale);  
+    Skeleton(const char *asf_filename, float scale);  
     ~Skeleton();                                
 
     //Get root node's address; for accessing bone data
@@ -78,7 +83,7 @@ class Skeleton {
   private:
 
 	//parse the skeleton (.ASF) file	
-    void readASFfile(char* asf_filename, float scale);
+    void readASFfile(const char* asf_filename, float scale);
 
 
 	//This recursive function traverces skeleton hierarchy 
@@ -99,6 +104,7 @@ class Skeleton {
 
   //Member Variables
   public:
+    Color color = { 0, 0, 0 };
 	// root position in world coordinate system
     float m_RootPos[3];
 	   int tx,ty,tz;

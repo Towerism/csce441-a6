@@ -26,9 +26,9 @@ class Motion
 	//member functions 
     public:
 		//Include Actor (skeleton) ptr
-		Motion(char *amc_filename, float scale,Skeleton * pActor);
+		Motion(const char *amc_filename, float scale,Skeleton * pActor);
 		//Use to creating motion from AMC file
-		Motion(char *amc_filename, float scale);
+		Motion(const char *amc_filename, float scale);
 		//Use to create default motion with specified number of frames
 		Motion(int nFrameNum);
 		//delete motion
@@ -37,8 +37,8 @@ class Motion
        // scale is a parameter to adjust the translational parameter
        // This value should be consistent with the scale parameter used in Skeleton()
        // The default value is 0.06
-       int readAMCfile(char* name, float scale);
-       int writeAMCfile(char* name, float scale);
+       int readAMCfile(const char* name, float scale);
+       int writeAMCfile(const char* name, float scale);
 
 	   //Set all postures to default posture
 	   //Root position at (0,0,0), orientation of each bone to (0,0,0)
@@ -49,8 +49,8 @@ class Motion
 		int GetPostureNum(int nFrameNum);
 		void SetTimeOffset(int n_offset);
 	   Posture* GetPosture(int nFrameNum);
-	   void SetBoneRotation(int nFrameNum, vector vRot, int nBone);
-	   void SetRootPos(int nFrameNum, vector vPos);
+	   void SetBoneRotation(int nFrameNum, whyNameThisClassTheSameAsSTDvectorThatIsDumb vRot, int nBone);
+	   void SetRootPos(int nFrameNum, whyNameThisClassTheSameAsSTDvectorThatIsDumb vPos);
 
 	//data members
 	public:

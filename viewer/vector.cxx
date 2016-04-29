@@ -7,9 +7,10 @@
 
 //#include "mathclass.h"
 
-vector operator-( vector const& a, vector const& b )
+// at least enclose in a namespace other than global sheesh
+whyNameThisClassTheSameAsSTDvectorThatIsDumb operator-( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& a, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& b )
 {
-    vector c;
+    whyNameThisClassTheSameAsSTDvectorThatIsDumb c;
 
     c.p[0] = a.p[0] - b.p[0];
     c.p[1] = a.p[1] - b.p[1];
@@ -18,9 +19,9 @@ vector operator-( vector const& a, vector const& b )
     return c;
 }
 
-vector operator+( vector const& a, vector const& b )
+whyNameThisClassTheSameAsSTDvectorThatIsDumb operator+( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& a, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& b )
 {
-    vector c;
+    whyNameThisClassTheSameAsSTDvectorThatIsDumb c;
 
     c.p[0] = a.p[0] + b.p[0];
     c.p[1] = a.p[1] + b.p[1];
@@ -29,9 +30,9 @@ vector operator+( vector const& a, vector const& b )
     return c;
 }
 
-vector operator/( vector const& a, float b )
+whyNameThisClassTheSameAsSTDvectorThatIsDumb operator/( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& a, float b )
 {
-    vector c;
+    whyNameThisClassTheSameAsSTDvectorThatIsDumb c;
 
     c.p[0] = a.p[0] / b;
     c.p[1] = a.p[1] / b;
@@ -41,9 +42,9 @@ vector operator/( vector const& a, float b )
 }
 
 //multip
-vector operator*( vector const& a, float b )
+whyNameThisClassTheSameAsSTDvectorThatIsDumb operator*( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& a, float b )
 {
-    vector c;
+    whyNameThisClassTheSameAsSTDvectorThatIsDumb c;
 
     c.p[0] = a.p[0] * b;
     c.p[1] = a.p[1] * b;
@@ -54,9 +55,9 @@ vector operator*( vector const& a, float b )
 
 
 //cross prodact
-vector operator*( vector const& a, vector const& b )
+whyNameThisClassTheSameAsSTDvectorThatIsDumb operator*( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& a, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& b )
 {
-    vector c;
+    whyNameThisClassTheSameAsSTDvectorThatIsDumb c;
 
     c.p[0] = a.p[1]*b.p[2] - a.p[2]*b.p[1];
     c.p[1] = a.p[2]*b.p[0] - a.p[0]*b.p[2];
@@ -66,31 +67,31 @@ vector operator*( vector const& a, vector const& b )
 }
 
 //dot prodact
-float operator%( vector const& a, vector const& b )
+float operator%( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& a, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& b )
 {
     return ( a.p[0]*b.p[0] + a.p[1]*b.p[1] + a.p[2]*b.p[2] );
 }
 
 
-vector
-interpolate( float t, vector const& a, vector const& b )
+whyNameThisClassTheSameAsSTDvectorThatIsDumb
+interpolate( float t, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& a, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& b )
 {
 	return a*(1.0-t) + b*t;
 }
 
-float len( vector const& v )
+float len( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& v )
 {
     return sqrt( v.p[0]*v.p[0] + v.p[1]*v.p[1] + v.p[2]*v.p[2] );
 }
 
 float
-vector::length() const
+whyNameThisClassTheSameAsSTDvectorThatIsDumb::length() const
 {
     return sqrt( p[0]*p[0] + p[1]*p[1] + p[2]*p[2] );
 }
 
 
-float angle( vector const& a, vector const& b )
+float angle( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& a, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& b )
 {
     return acos( (a%b)/(len(a)*len(b)) );
 }

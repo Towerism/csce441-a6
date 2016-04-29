@@ -14,7 +14,6 @@
 #include "skeleton.h"
 #include "motion.h"
 
-
 class Display 
 {
 

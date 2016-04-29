@@ -15,15 +15,18 @@ class Posture
 	public:
 
 		//Root position (x, y, z)		
-		vector root_pos;								
+		whyNameThisClassTheSameAsSTDvectorThatIsDumb root_pos;		
+    int frame;
+
+    bool operator<(Posture other);
 		
 		//Rotation (x, y, z) of all bones at a particular time frame in their local coordinate system.
 		//If a particular bone does not have a certain degree of freedom, 
 		//the corresponding rotation is set to 0.
 		//The order of the bones in the array corresponds to their ids in .ASf file: root, lhipjoint, lfemur, ...
-		vector bone_rotation[MAX_BONES_IN_ASF_FILE];
-		vector bone_translation[MAX_BONES_IN_ASF_FILE];
-		vector bone_length[MAX_BONES_IN_ASF_FILE];
+		whyNameThisClassTheSameAsSTDvectorThatIsDumb bone_rotation[MAX_BONES_IN_ASF_FILE];
+		whyNameThisClassTheSameAsSTDvectorThatIsDumb bone_translation[MAX_BONES_IN_ASF_FILE];
+		whyNameThisClassTheSameAsSTDvectorThatIsDumb bone_length[MAX_BONES_IN_ASF_FILE];
 };
 
 #endif

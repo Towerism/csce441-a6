@@ -124,7 +124,9 @@ void Display::drawBone(Bone *pBone,int skelNum)
 	if(pBone->dofy) glRotatef(pBone->dry, 0., 1,  0.);
 	if(pBone->dofx) glRotatef(pBone->drx, 1., 0., 0.);
 
-	glColor3f(1., 1., 0.1);
+
+  Color color = m_pActor[skelNum]->color;
+  glColor3f(color.r, color.g, color.b);
 
 	//Store the current ModelviewMatrix (before adding the translation part)
 	glPushMatrix();

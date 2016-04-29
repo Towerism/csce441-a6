@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="display.cxx" />
     <ClCompile Include="interface.cxx" />
+    <ClCompile Include="interpolation.cxx" />
     <ClCompile Include="interpolator.cxx" />
     <ClCompile Include="motion.cxx" />
     <ClCompile Include="player.cxx" />
@@ -142,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="display.h" />
     <ClInclude Include="interface.h" />
+    <ClInclude Include="interpolation.h" />
     <ClInclude Include="interpolator.h" />
     <ClInclude Include="motion.h" />
     <ClInclude Include="player.h" />

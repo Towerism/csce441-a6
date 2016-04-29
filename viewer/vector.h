@@ -10,44 +10,44 @@
 #define _VECTOR_H
 
 
-class vector
+class whyNameThisClassTheSameAsSTDvectorThatIsDumb
 {
     // negation
-    friend vector    operator-( vector const& );
+    friend whyNameThisClassTheSameAsSTDvectorThatIsDumb    operator-( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& );
 
     // addtion
-    friend vector    operator+( vector const&, vector const& );
+    friend whyNameThisClassTheSameAsSTDvectorThatIsDumb    operator+( whyNameThisClassTheSameAsSTDvectorThatIsDumb const&, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& );
 
     // subtraction
-    friend vector    operator-( vector const&, vector const& );
+    friend whyNameThisClassTheSameAsSTDvectorThatIsDumb    operator-( whyNameThisClassTheSameAsSTDvectorThatIsDumb const&, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& );
 
     // dot product
-    friend float    operator%( vector const&, vector const& );
+    friend float    operator%( whyNameThisClassTheSameAsSTDvectorThatIsDumb const&, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& );
 
     // cross product
-    friend vector    operator*( vector const&, vector const& );
+    friend whyNameThisClassTheSameAsSTDvectorThatIsDumb    operator*( whyNameThisClassTheSameAsSTDvectorThatIsDumb const&, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& );
 
     // scalar Multiplication
-    friend vector    operator*( vector const&, float );
+    friend whyNameThisClassTheSameAsSTDvectorThatIsDumb    operator*( whyNameThisClassTheSameAsSTDvectorThatIsDumb const&, float );
 
     // scalar Division
-    friend vector    operator/( vector const&, float );
+    friend whyNameThisClassTheSameAsSTDvectorThatIsDumb    operator/( whyNameThisClassTheSameAsSTDvectorThatIsDumb const&, float );
 
 
-    friend float    len( vector const& );
-    friend vector	normalize( vector const& );
+    friend float    len( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& );
+    friend whyNameThisClassTheSameAsSTDvectorThatIsDumb	normalize( whyNameThisClassTheSameAsSTDvectorThatIsDumb const& );
 
-	friend vector       interpolate( float, vector const&, vector const& );
+	friend whyNameThisClassTheSameAsSTDvectorThatIsDumb       interpolate( float, whyNameThisClassTheSameAsSTDvectorThatIsDumb const&, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& );
 
-    friend float       angle( vector const&, vector const& );
+    friend float       angle( whyNameThisClassTheSameAsSTDvectorThatIsDumb const&, whyNameThisClassTheSameAsSTDvectorThatIsDumb const& );
 
   // member functions
   public:
     // constructors
-    vector() {}
-    vector( float x, float y, float z ) { p[0]=x; p[1]=y; p[2]=z; }
-    vector( float a[3] ) { p[0]=a[0]; p[1]=a[1]; p[2]=a[2]; }
-	~vector() {};
+    whyNameThisClassTheSameAsSTDvectorThatIsDumb() {}
+    whyNameThisClassTheSameAsSTDvectorThatIsDumb( float x, float y, float z ) { p[0]=x; p[1]=y; p[2]=z; }
+    whyNameThisClassTheSameAsSTDvectorThatIsDumb( float a[3] ) { p[0]=a[0]; p[1]=a[1]; p[2]=a[2]; }
+	~whyNameThisClassTheSameAsSTDvectorThatIsDumb() {};
 
     // inquiry functions
     float& operator[](int i) { return p[i];}
@@ -59,7 +59,7 @@ class vector
     void   setValue( float d[3] ) { p[0]=d[0]; p[1]=d[1]; p[2]=d[2]; }
 
 	float getValue( int n ) const { return p[n]; }
-	vector setValue( float x, float y, float z )
+	whyNameThisClassTheSameAsSTDvectorThatIsDumb setValue( float x, float y, float z )
 								   { p[0]=x, p[1]=y, p[2]=z; return *this; }
 	float setValue( int n, float x )
 								   { return p[n]=x; }
